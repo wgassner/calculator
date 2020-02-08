@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+        pollSCM('* * * * *')
+    }
     stages {
         stage('Compile') {
             steps {
@@ -23,7 +26,7 @@ pipeline {
         }
         stage('Mutation test') {
             steps {
-                sh "./mvnw "
+                sh "./mvnw org.pitest:pitest-maven:mutationCoverage"
                 publishHTML (target: [
                     reportDir: 'target/pit-reports',
                     reportFiles: 'index.html',
