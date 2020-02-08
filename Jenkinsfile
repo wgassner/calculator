@@ -21,5 +21,15 @@ pipeline {
                 sh "./mvnw clean verify"
             }
         }
+        stage('Mutation test') {
+            steps {
+                sh "./mvnw "
+                publishHTML (target: [
+                    reportDir: 'target/pit-reports',
+                    reportFiles: 'index.html',
+                    reportName: 'PIT Report'
+                ])
+            }
+        }
     }
 }
