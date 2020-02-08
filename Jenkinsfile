@@ -47,5 +47,10 @@ pipeline {
                 sh "docker build -t wgassner/calculator ."
             }
         }
+        stage('Docker push') {
+            steps {
+                sh "docker push wgassner/calculator"
+            }
+        }
     }
 }
