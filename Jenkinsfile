@@ -26,8 +26,11 @@ pipeline {
         }
         stage('Mutation test') {
             steps {
-                sh "./mvnw org.pitest:pitest-maven:mutationCoverage"
+                sh "./mvnw -DtimestampedReports=false org.pitest:pitest-maven:mutationCoverage"
                 publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
                     reportDir: 'target/pit-reports',
                     reportFiles: 'index.html',
                     reportName: 'PIT Report'
