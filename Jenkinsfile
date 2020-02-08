@@ -37,5 +37,15 @@ pipeline {
                 ])
             }
         }
+        stage('Package') {
+            steps {
+                sh "./mvnw package"
+            }
+        }
+        stage('Docker build') {
+            steps {
+                sh "docker build -t wgassner/calculator ."
+            }
+        }
     }
 }
