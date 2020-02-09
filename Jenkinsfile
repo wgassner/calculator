@@ -16,12 +16,14 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                sh "./mvnw compile"
+                //sh "./mvnw compile"
+                sh "mvn -B compile"
             }
         }
         stage('Unit test') {
             steps {
-                sh "./mvnw test"
+                //sh "./mvnw test"
+                sh "mvn -B test"
             }
         }
         stage('Code coverage') {
@@ -31,12 +33,14 @@ pipeline {
                     reportFiles: 'index.html',
                     reportName: 'JaCoCo Report'
                 ])
-                sh "./mvnw clean verify"
+                //sh "./mvnw clean verify"
+                sh "mvn -B clean verify"
             }
         }
         stage('Mutation test') {
             steps {
-                sh "./mvnw -DtimestampedReports=false org.pitest:pitest-maven:mutationCoverage"
+                //sh "./mvnw -DtimestampedReports=false org.pitest:pitest-maven:mutationCoverage"
+                sh "mvn -DtimestampedReports=false org.pitest:pitest-maven:mutationCoverage"
                 publishHTML (target: [
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
@@ -49,7 +53,8 @@ pipeline {
         }
         stage('Package') {
             steps {
-                sh "./mvnw package"
+                //sh "./mvnw package"
+                sh "mvn -B package -DskipTests"
             }
         }
         stage('Docker build') {
