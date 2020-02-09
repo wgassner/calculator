@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "wgassner/calculator"
-        registryCredential = 'docke'
+        registryCredential = 'docker'
         dockerImage = ''
     }
     agent any
