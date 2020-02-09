@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        registry = "wgassner/calculator"
+        registryCredential = ‘dockerhub’
+    }
     agent any
     triggers {
         pollSCM('* * * * *')
@@ -49,7 +53,6 @@ pipeline {
         }
         stage('Docker push') {
             steps {
-                sh "docker login"
                 sh "docker push wgassner/calculator"
             }
         }
