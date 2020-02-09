@@ -4,7 +4,12 @@ pipeline {
         registryCredential = 'docker'
         dockerImage = ''
     }
-    agent any
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
     triggers {
         pollSCM('* * * * *')
     }
@@ -53,7 +58,7 @@ pipeline {
                     dockerImage = docker.build registry
                 }
             }
-        }
+        } /*
         stage('Docker push') {
             steps {
                 script {
@@ -62,6 +67,6 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
     }
 }
