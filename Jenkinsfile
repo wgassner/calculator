@@ -49,7 +49,7 @@ pipeline {
         }
         stage('Docker push') {
             steps {
-                sh "login docker.io"
+                sh "docker login docker.io"
                 sh "docker push wgassner/calculator"
             }
         }
