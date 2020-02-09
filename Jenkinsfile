@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        registry = "wgassner/calculator"
+        registryCredential = 'docke'
+        dockerImage = ''
+    }
     agent any
     triggers {
         pollSCM('* * * * *')
@@ -44,12 +49,18 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                sh "docker build -t wgassner/calculator ."
+                script {
+                    dockerImage = docker.build registry
+                }
             }
         }
         stage('Docker push') {
             steps {
-                sh "docker push wgassner/calculator"
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
