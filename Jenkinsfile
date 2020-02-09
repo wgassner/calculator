@@ -1,8 +1,4 @@
 pipeline {
-    environment {
-        registry = "wgassner/calculator"
-        registryCredential = ‘dockerhub’
-    }
     agent any
     triggers {
         pollSCM('* * * * *')
