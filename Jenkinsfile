@@ -76,15 +76,19 @@ pipeline {
         }
         stage("Deploy to staging") {
             steps {
-                dockerImage.withRun('-p 8765:8080 --name calculator') {
-                    sleep 60
-                    sh "./acceptance_test.sh"
+                script {
+                    dockerImage.withRun('-p 8765:8080 --name calculator') {
+                        sleep 60
+                        sh "./acceptance_test.sh"
+                    }
                 }
             }
         }
         post {
             always {
-                dockerContainer.stop
+                script {
+                    dockerContainer.stop
+                }
             }
         }
 
