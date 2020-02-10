@@ -84,13 +84,12 @@ pipeline {
                 }
             }
         }
-        post {
-            always {
-                script {
-                    dockerContainer.stop
-                }
+    }
+    post {
+        always {
+            script {
+                dockerContainer.stop
             }
         }
-
     }
 }
