@@ -77,7 +77,7 @@ pipeline {
         stage("Deploy to staging") {
             steps {
                 script {
-                    dockerImage.withRun('-p 8765:8080 --name calculator') {
+                    dockerImage.withRun('--rm -p 8765:8080 --name calculator') {
                         sleep 60
                         sh "./acceptance_test.sh"
                     }
