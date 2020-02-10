@@ -85,11 +85,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            script {
-                dockerContainer.stop
-            }
-        }
-    }
 }
