@@ -54,8 +54,8 @@ pipeline {
         }
         stage('Package') {
             steps {
-                sh "./mvnw package"
-                //sh "mvn -B -DskipTests package"
+                sh "./mvnw -DskipTests=true package"
+                //sh "mvn -B -DskipTests=true package"
             }
         }
         stage('Docker build') {
@@ -64,7 +64,7 @@ pipeline {
                     dockerImage = docker.build registry
                 }
             }
-        }
+        }/*
         stage('Docker push') {
             steps {
                 script {
@@ -73,11 +73,11 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage("Deploy to staging") {
             steps {
                 script {
-                    dockerImage.inside('--rm -p 8765:8080') {
+                    dockerImage.withRun('--rm -p 8765:8080') {
                         sleep 60
                         sh "./acceptance_test.sh"
                     }
